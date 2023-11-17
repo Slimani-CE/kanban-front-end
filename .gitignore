@@ -4,7 +4,9 @@
 /node_modules
 /.pnp
 .pnp.js
-
+# Project starter & Design files
+kanban-task-management-web-app
+kanban-task-management-web-app-figma
 # testing
 /coverage
 
