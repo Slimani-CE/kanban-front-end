@@ -4,10 +4,17 @@ import TaskViewModal from "./TaskViewModal";
 function Todo({ task }) {
   const [isTaskViewModalOpen, setIsTaskViewModalOpen] = React.useState(false);
 
-  let completedSubtasks = task.subtasks?.filter(
-    (subtask) => subtask.isCompleted
-  ).length;
-  let totalSubtasks = task.subtasks?.length;
+  let completedSubtasks = 0;
+  let totalSubtasks = 0;
+
+  if (task.subtasks) {
+    completedSubtasks = task.subtaskList.filter(
+      (subtask) => subtask.isCompleted
+    ).length;
+    totalSubtasks = task.subtaskList.length;
+  }
+
+  console.log(task);
 
   return (
     <>

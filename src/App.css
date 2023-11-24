@@ -86,13 +86,26 @@ html {
   overflow: scroll;
   overflow-x: hidden;
 }
+
 ::-webkit-scrollbar {
-  width: 0px;  /* Remove scrollbar space */
-  background: transparent;  /* Optional: just make scrollbar invisible */
+  width: 0px;  
+  background: transparent; 
 }
+
 /* Optional: show position indicator in red */
 ::-webkit-scrollbar-thumb {
   background: var(--main-purple);
+}
+
+::-webkit-scrollbar {
+  width: 5px;  /* Remove scrollbar space */
+  background: var(--light-bg);  /* Optional: just make scrollbar invisible */
+}
+
+/* Optional: show position indicator in red */
+::-webkit-scrollbar-thumb {
+  background: var(--main-purple);
+  /* border-radius: 5px; */
 }
 
 h1 {
@@ -201,10 +214,12 @@ h4 {
   height: 48px;
   display: flex;
   align-items: center;
+  justify-content: start;
   column-gap: 16px;
   padding-left: 32px;
   cursor: pointer;
   border-radius: 0 24px 24px 0;
+  background-color: transparent;
 }
 
 #sidebar .board-btn h3 {
@@ -302,10 +317,10 @@ h4 {
 }
 
 #playground .add-btn {
-  width: 164px;
+  min-width: 164px;
   height: 48px;
   border-radius: 24px;
-  font-size: 15px;
+  font-size: 13px;
   font-weight: bold;
   background-color: var(--main-purple);
   border: none;
@@ -354,12 +369,17 @@ h4 {
 }
 
 #board {
-  width: 100%;
+  width: calc(100vw - 300px);
   height: calc(100vh - 100px);
   overflow: auto;
   padding: 25px;
   display: flex;
   column-gap: 24px;
+  transition: width 0.3s ease-in-out;
+}
+
+#board.side-bar-closed {
+  width: 100vw;
 }
 
 #add-new-column {
@@ -367,7 +387,7 @@ h4 {
   border-radius: 6px;
   background-color: var(--light-lines);
   color: var(--medium-grey);
-  font-size: 24px;
+  font-size: 18px;
   font-weight: bold;
   border: none;
   display: flex;
@@ -386,6 +406,7 @@ h4 {
   display: flex;
   flex-direction: column;
   row-gap: 20px;
+  flex-shrink: 0;
 }
 
 .todo-list .todo-list-name {
@@ -536,3 +557,95 @@ h4 {
   color: var(--medium-grey);
 }
 /* TASK VIEW MODAL CSS SECTION (END) */
+
+/* ADD TASK MODAL CSS SECTION (START) */
+.edit-task-modal {
+  height: 600px;
+  width: 480px;
+  border-radius: 6px;
+  padding: 32px !important;
+  display: flex;
+  flex-direction: column !important;
+  row-gap: 24px !important;
+  background-color: var(--white) !important;
+  overflow: auto;
+}
+
+.edit-task-modal .task-input-container {
+  display: flex;
+  flex-direction: column;
+  row-gap: 8px;
+}
+
+.edit-task-modal .task-input-container label {
+  font-size: 12px;
+  font-weight: bold;
+  color: var(--medium-grey);
+} 
+
+.edit-task-modal .task-input-container .MuiInput-root,
+.edit-task-modal .task-input-container .MuiTextarea-root {
+  flex: 1;
+  background-color: transparent;
+  border: 1px solid rgba(130, 143, 163, 0.25);
+  border-radius: 4px;
+  box-shadow: none;
+}
+
+.edit-task-modal .task-input-container .MuiTextarea-root {
+  height: 110px;
+}
+
+.edit-task-modal .task-input-container .MuiInput-root.Mui-focused::before,
+.edit-task-modal .task-input-container .MuiTextarea-root.Mui-focused::before {
+  border: 2px solid var(--main-purple);
+  box-shadow: none;
+}
+
+.edit-task-modal .task-input-container .MuiSelect-root {
+  background-color: transparent;
+  box-shadow: none;
+  border-radius: 4px;
+}
+
+.edit-task-modal .task-input-container.task-subtasks .subtask-container {
+  display: flex;
+  align-items: center;
+  column-gap: 16px;
+}
+
+.edit-task-modal .task-input-container.task-subtasks .subtask-container button {
+  border: none;
+  background-color: transparent;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+}
+
+.edit-task-modal .task-input-container.task-subtasks > button {
+  font-size: 13px;
+  font-weight: bold;
+  height: 40px;
+  border-radius: 20px;
+  background-color: rgba(98, 95, 199, 0.10);
+  color: var(--main-purple);
+}
+
+.edit-task-modal .task-input-container.task-subtasks > button:hover {
+  background-color: rgba(98, 95, 199, 0.25);
+}
+
+.edit-task-modal .task-input-container.save-changes-div button {
+  font-size: 13px;
+  font-weight: bold;
+  height: 40px;
+  border-radius: 20px;
+  background-color: var(--main-purple);
+  color: var(--white);
+}
+
+.edit-board-modal {
+  height: 430px;
+}
+
+/* ADD TASK MODAL CSS SECTION (END) */

@@ -27,10 +27,11 @@ import MoreVert from "@mui/icons-material/MoreVert";
 import DeleteForever from "@mui/icons-material/DeleteForever";
 import AlertModal from "./AlertModal";
 import { DataContext } from "../hooks/DataContext";
+import TaskEditModal from "./TaskEditModal";
 
 function TaskViewModal({ open, setOpen, task }) {
   const [isAlertModalOpen, setIsAlertModalOpen] = React.useState(false);
-  const { setData } = useContext(DataContext);
+  const [isEditModalOpen, setIsEditModalOpen] = React.useState(false);
 
   return (
     <React.Fragment>
@@ -80,6 +81,10 @@ function TaskViewModal({ open, setOpen, task }) {
                   <Menu disablePortal>
                     <MenuItem
                       sx={{ display: "flex", justifyContent: "space-between" }}
+                      onClick={() => {
+                        setIsEditModalOpen(true);
+                        setOpen(false);
+                      }}
                     >
                       Edit Task <ModeEditOutlineIcon />
                     </MenuItem>
@@ -96,7 +101,7 @@ function TaskViewModal({ open, setOpen, task }) {
                   </Menu>
                 </Dropdown>
               </div>
-              <p class="task-details">{task.description}</p>
+              <p className="task-details">{task.description}</p>
               <div className="subtasks-container">
                 <h3>
                   Subtasks (
@@ -114,22 +119,9 @@ function TaskViewModal({ open, setOpen, task }) {
                       />
                     );
                   })}
-                  {/* <Checkbox
-                    className="checkbox-container"
-                    label="THIS IS A GOOD TEXT"
-                    onChange={(event) => console.log(event.target.checked)}
-                  />
-                  <Checkbox
-                    className="checkbox-container"
-                    label="THIS IS A GOOD TEXT"
-                  />
-                  <Checkbox
-                    className="checkbox-container"
-                    label="THIS IS A GOOD TEXT"
-                  /> */}
                 </div>
               </div>
-              <div className="task-footer">
+              <div className="task-footer task-input-container">
                 <label>Current Status</label>
                 <Select
                   value={task.status}
@@ -162,6 +154,12 @@ function TaskViewModal({ open, setOpen, task }) {
         title="Delete this task ?"
         description="Are you sure you want to delete this task? This action cannot be undone."
         execute={() => console.log("delete")}
+        setParent={setOpen}
+      />
+      <TaskEditModal
+        open={isEditModalOpen}
+        setOpen={setIsEditModalOpen}
+        task={task}
         setParent={setOpen}
       />
     </React.Fragment>

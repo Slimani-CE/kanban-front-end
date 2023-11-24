@@ -4,9 +4,13 @@ import BoardIcon from "../svg/BoardIcon";
 import HideEyeIcon from "../svg/HideEyeIcon";
 import ThemeSwitcher from "./ThemeSwitcher";
 import { DataContext } from "../hooks/DataContext";
+import BoardEditModal from "./BoardEditModal";
+import { Button } from "@mui/joy";
+
 function Sidebar() {
-  const { toggleSideBar, data, setCurrentBoard } =
+  const { toggleSideBar, setCurrentBoard, currentBoard, user } =
     React.useContext(DataContext);
+  const [isBoardeditModalOpen, setIsBoardeditModalOpen] = React.useState(false);
 
   function switchBoardBtn(index) {
     const boardBtns = document.querySelectorAll("#board-list .board-btn");
@@ -23,11 +27,11 @@ function Sidebar() {
           <Logo />
         </div>
         <div id="board-list">
-          <span>all boards ({data?.length})</span>
-          {data?.map((item, index) => {
+          <span>all boards ({user?.boards.length})</span>
+          {user?.boards.map((item, index) => {
             return (
               <Fragment key={index}>
-                <div
+                <Button
                   className={"board-btn " + (index === 0 ? "active" : "")}
                   onClick={() => {
                     setCurrentBoard(item);
@@ -36,26 +40,19 @@ function Sidebar() {
                 >
                   <BoardIcon />
                   <h3>{item.name}</h3>
-                </div>
+                </Button>
               </Fragment>
             );
           })}
-          {/* <div className="board-btn active">
+          <Button
+            className="board-btn create-board-btn"
+            onClick={() => {
+              setIsBoardeditModalOpen(true);
+            }}
+          >
             <BoardIcon />
-            <h3>platform launch</h3>
-          </div>
-          <div className="board-btn">
-            <BoardIcon />
-            <h3>marketing plan</h3>
-          </div>
-          <div className="board-btn">
-            <BoardIcon />
-            <h3>roadmap</h3>
-          </div> */}
-          <button className="board-btn create-board-btn">
-            <BoardIcon />
-            <h3>+ create new brand</h3>
-          </button>
+            <h3>+ create new board</h3>
+          </Button>
         </div>
         <ThemeSwitcher />
         <button className="board-btn hide-sidebar-btn" onClick={toggleSideBar}>
@@ -63,6 +60,12 @@ function Sidebar() {
           <h3>Hide Sidebar</h3>
         </button>
       </div>
+
+      <BoardEditModal
+        open={isBoardeditModalOpen}
+        setOpen={setIsBoardeditModalOpen}
+        setBoard={setCurrentBoard}
+      />
     </>
   );
 }

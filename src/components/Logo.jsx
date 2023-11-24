@@ -1,7 +1,7 @@
 import React from "react";
 import DarkLogo from "../svg/DarkLogo";
-function Logo() {
-  return <DarkLogo />;
+function Logo(props) {
+  return <DarkLogo {...props} />;
 }
 
 export default Logo;
